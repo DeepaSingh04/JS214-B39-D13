@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Object Creation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .output {
+            background-color: #eef;
+            border: 1px solid #ccd;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+        button {
+            display: inline-block;
+            background-color: #28a745;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>iPhone Object Creation using Class</h1>
+        <button id="createButton">Create iPhone Object</button>
+
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        // iPhone Class
+        class Iphone {
+            constructor(ASIN, color, display, operatingSystem, storage, bluetooth, camera) {
+                this.ASIN = ASIN;
+                this.color = color;
+                this.display = display;
+                this.operatingSystem = operatingSystem;
+                this.storage = storage;
+                this.bluetooth = bluetooth;
+                this.camera = camera;
+            }
+
+            dial() {
+                return "Tring.. Tring...";
+            }
+
+            sendMessage() {
+                return "Sending message...";
+            }
+
+            cameraClick() {
+                return "Camera clicked";
+            }
+
+            connectBluetooth() {
+                return "Bluetooth connected successfully...";
+            }
+
+            getDetails() {
+                return `
+                ASIN: ${this.ASIN}
+                Color: ${this.color}
+                Display: ${this.display}
+                Operating System: ${this.operatingSystem}
+                Storage: ${this.storage}
+                Bluetooth: ${this.bluetooth}
+                Camera: ${this.camera}
+                `;
+            }
+        }
+
+        // Event Listener for the Create iPhone Object Button
+        document.getElementById("createButton").addEventListener("click", () => {
+            // Creating an iPhone object using the iPhone class
+            let i4 = new Iphone(
+                "B09X67JBQV",
+                "Gray",
+                "7.8 inch",
+                "iOS",
+                "128 MB",
+                "Bluetooth 5.1",
+                "12 MP"
+            );
+
+            // Displaying object properties and methods
+            const outputDiv = document.getElementById("output");
+            outputDiv.textContent = `
+                --- Properties ---
+                ASIN: ${i4.ASIN}
+                Color: ${i4.color}
+                Display: ${i4.display}
+                Operating System: ${i4.operatingSystem}
+                Storage: ${i4.storage}
+                Bluetooth: ${i4.bluetooth}
+                Camera: ${i4.camera}
+
+                --- Methods ---
+                Dial: ${i4.dial()}
+                Send Message: ${i4.sendMessage()}
+                Camera Click: ${i4.cameraClick()}
+                Connect Bluetooth: ${i4.connectBluetooth()}
+            `;
+        });
+    </script>
+</body>
+</html>

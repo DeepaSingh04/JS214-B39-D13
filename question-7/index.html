@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Object Creation using Constructor and Call</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .output {
+            margin-top: 20px;
+            background-color: #eef;
+            padding: 15px;
+            border: 1px solid #ccd;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+        button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create iPhone Object using Constructor and Call</h1>
+        <button id="createButton">Create iPhone 3 Object</button>
+
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        // Constructor function for iPhone
+        function iPhone3(ASIN, color, display, camera, bluetooth) {
+            this.ASIN = ASIN;
+            this.color = color;
+            this.display = display;
+            this.camera = camera;
+            this.bluetooth = bluetooth;
+
+            // Method for dialing
+            this.dial = function() {
+                return "tring.. tring...";
+            };
+
+            // Method for sending a message
+            this.sendMessage = function() {
+                return "Sending message...";
+            };
+
+            // Method for camera click
+            this.cameraClick = function() {
+                return "Camera clicked";
+            };
+
+            // Method for connecting to Bluetooth
+            this.connectBluetooth = function() {
+                return "Bluetooth connected successfully...";
+            };
+        }
+
+        // Event listener for button click
+        document.getElementById("createButton").addEventListener("click", () => {
+            // Creating an object using the call() method
+            let i3 = {};
+            iPhone3.call(i3, "B09X67JBQV", "Gray", "7.8 inch", "2.0 MP", "Bluetooth 5.1");
+
+            // Displaying the properties and methods of the iPhone3 object
+            const outputDiv = document.getElementById("output");
+            outputDiv.textContent = `
+                --- Properties ---
+                ASIN: ${i3.ASIN}
+                Color: ${i3.color}
+                Display: ${i3.display}
+                Camera: ${i3.camera}
+                Bluetooth: ${i3.bluetooth}
+
+                --- Methods ---
+                Dial: ${i3.dial()}
+                Send Message: ${i3.sendMessage()}
+                Camera Click: ${i3.cameraClick()}
+                Connect Bluetooth: ${i3.connectBluetooth()}
+            `;
+        });
+    </script>
+</body>
+</html>

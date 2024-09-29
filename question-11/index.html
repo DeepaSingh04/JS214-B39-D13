@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .car-simulator {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .status p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="car-simulator">
+        <h1>Car Simulation</h1>
+        <button onclick="car.accelerate()">Accelerate</button>
+        <button onclick="car.brake()">Brake</button>
+        <button onclick="car.checkSpeed()">Check Speed</button>
+        <button onclick="car.refuel()">Refuel</button>
+        <button onclick="car.drive()">Start Drive</button>
+        <div class="status">
+            <h3>Status</h3>
+            <p id="speed">Current Speed: 0 m/s</p>
+            <p id="fuel">Fuel Level: 100%</p>
+            <p id="log"></p>
+        </div>
+    </div>
+
+    <script>
+        class Car {
+            constructor(name, accelerationPower, brakingPower, maxFuel = 100) {
+                this.name = name;
+                this.accelerationPower = accelerationPower;
+                this.brakingPower = brakingPower;
+                this.speed = 0;
+                this.maxFuel = maxFuel;
+                this.currentFuel = maxFuel;
+            }
+
+            accelerate() {
+                if (this.currentFuel > 0) {
+                    this.speed += this.accelerationPower;
+                    this.currentFuel -= 10;
+                    this.logStatus("Accelerating");
+                } else {
+                    this.logStatus("Not enough fuel to accelerate.");
+                }
+            }
+
+            brake() {
+                this.speed = Math.max(0, this.speed - this.brakingPower);
+                this.logStatus("Brakes applied");
+            }
+
+            checkSpeed() {
+                this.logStatus(`Current speed is ${this.speed} m/s`);
+            }
+
+            refuel() {
+                this.currentFuel = this.maxFuel;
+                this.logStatus("Refueled to maximum capacity");
+            }
+
+            drive() {
+                if (this.currentFuel <= 0) {
+                    this.logStatus("Cannot start drive. Not enough fuel.");
+                    return;
+                }
+                this.logStatus("Starting drive...");
+                let interval = setInterval(() => {
+                    if (this.currentFuel <= 0) {
+                        clearInterval(interval);
+                        this.logStatus("Drive ended. Out of fuel.");
+                        return;
+                    }
+                    this.accelerate();
+                    setTimeout(() => this.brake(), 500);  // Brake after 500ms
+                }, 1000);  // Repeat every 1 second
+            }
+
+            logStatus(action) {
+                const speedElement = document.getElementById("speed");
+                const fuelElement = document.getElementById("fuel");
+                const logElement = document.getElementById("log");
+
+                speedElement.textContent = `Current Speed: ${this.speed} m/s`;
+                fuelElement.textContent = `Fuel Level: ${this.currentFuel}%`;
+                logElement.textContent = `${action} | Speed: ${this.speed} m/s | Fuel: ${this.currentFuel}%`;
+            }
+        }
+
+        // Create an instance of the Car class
+        const car = new Car("Speedster", 10, 5);
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .library-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .results p {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="library-container">
+        <h1>Library Management System</h1>
+        <h2>Add New Book</h2>
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter book title">
+        
+        <label for="author">Author:</label>
+        <input type="text" id="author" placeholder="Enter author name">
+
+        <label for="year">Year:</label>
+        <input type="number" id="year" placeholder="Enter publication year">
+
+        <label for="genre">Genre:</label>
+        <select id="genre">
+            <option value="Fiction">Fiction</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Biography">Biography</option>
+            <option value="Fantasy">Fantasy</option>
+        </select>
+
+        <button onclick="addBook()">Add Book</button>
+
+        <h2>Library Operations</h2>
+        <button onclick="filterBooks()">Filter Books Published After 2000</button>
+        <button onclick="displayTitles()">Display All Book Titles</button>
+        <button onclick="totalBooks()">Total Number of Books</button>
+        <button onclick="averageYear()">Average Publication Year</button>
+
+        <div class="results" id="results">
+            <h3>Results:</h3>
+        </div>
+    </div>
+
+    <script>
+        // Book class definition
+        class Book {
+            constructor(title, author, year, genre) {
+                this.title = title;
+                this.author = author;
+                this.year = year;
+                this.genre = genre;
+            }
+
+            // Method to return book information
+            getInfo() {
+                return `${this.title} by ${this.author}, published in ${this.year} - Genre: ${this.genre}`;
+            }
+        }
+
+        // Factory function to create a new book
+        function createBook(title, author, year, genre) {
+            return new Book(title, author, year, genre);
+        }
+
+        // Library class definition
+        class Library {
+            constructor() {
+                this.books = [];
+            }
+
+            // Method to add a book to the collection
+            addBook(book) {
+                this.books.push(book);
+            }
+
+            // Method to filter books published after a certain year
+            filterBooks(year) {
+                return this.books.filter(book => book.year > year);
+            }
+
+            // Method to get an array of all book titles
+            getAllBookTitles() {
+                return this.books.map(book => book.title);
+            }
+
+            // Method to get the total number of books
+            getTotalBooks() {
+                return this.books.reduce((total) => total + 1, 0);
+            }
+
+            // Method to calculate the average publication year
+            getAverageYear() {
+                const totalYears = this.books.reduce((sum, book) => sum + book.year, 0);
+                return this.books.length ? (totalYears / this.books.length).toFixed(2) : 0;
+            }
+        }
+
+        // Create an instance of the Library class
+        const library = new Library();
+
+        // Function to add a new book from the form
+        function addBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const year = parseInt(document.getElementById('year').value);
+            const genre = document.getElementById('genre').value;
+
+            if (title && author && year && genre) {
+                const newBook = createBook(title, author, year, genre);
+                library.addBook(newBook);
+                displayResults(`Added: ${newBook.getInfo()}`);
+                clearForm();
+            } else {
+                displayResults("Please fill in all the fields.");
+            }
+        }
+
+        // Function to clear the form inputs
+        function clearForm() {
+            document.getElementById('title').value = '';
+            document.getElementById('author').value = '';
+            document.getElementById('year').value = '';
+            document.getElementById('genre').value = 'Fiction';
+        }
+
+        // Function to display results in the results area
+        function displayResults(message) {
+            document.getElementById('results').innerHTML += `<p>${message}</p>`;
+        }
+
+        // Function to filter books published after the year 2000
+        function filterBooks() {
+            const filteredBooks = library.filterBooks(2000);
+            displayResults(`Books published after 2000: ${filteredBooks.length}`);
+            filteredBooks.forEach(book => displayResults(book.getInfo()));
+        }
+
+        // Function to display all book titles
+        function displayTitles() {
+            const titles = library.getAllBookTitles();
+            displayResults(`All Book Titles: ${titles.join(', ')}`);
+        }
+
+        // Function to display the total number of books
+        function totalBooks() {
+            const total = library.getTotalBooks();
+            displayResults(`Total Number of Books: ${total}`);
+        }
+
+        // Function to display the average publication year of all books
+        function averageYear() {
+            const average = library.getAverageYear();
+            displayResults(`Average Publication Year: ${average}`);
+        }
+    </script>
+</body>
+</html>

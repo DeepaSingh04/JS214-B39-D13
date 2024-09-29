@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Object Creation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .output {
+            background-color: #eef;
+            border: 1px solid #ccd;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+        button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Animal Object Creation in JavaScript</h1>
+        <button id="factoryButton">Create Animal using Factory Function</button>
+        <button id="constructorButton">Create Animal using Constructor Function</button>
+        <button id="classButton">Create Animal using ES6 Class</button>
+
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        // Factory Function
+        function createAnimal(noOfLegs, vegetarian) {
+            return {
+                noOfLegs,
+                vegetarian,
+                eat() {
+                    return "eating...";
+                },
+                greet() {
+                    return `Hi, I have ${this.noOfLegs} legs.`;
+                }
+            };
+        }
+
+        // Constructor Function
+        function AnimalCF(noOfLegs, vegetarian) {
+            this.noOfLegs = noOfLegs;
+            this.vegetarian = vegetarian;
+            this.eat = function () {
+                return "eating...";
+            };
+            this.greet = function () {
+                return `Hi, I have ${this.noOfLegs} legs.`;
+            };
+        }
+
+        // ES6 Class
+        class AnimalES6 {
+            constructor(noOfLegs, vegetarian) {
+                this.noOfLegs = noOfLegs;
+                this.vegetarian = vegetarian;
+            }
+
+            eat() {
+                return "eating...";
+            }
+
+            greet() {
+                return `Hi, I have ${this.noOfLegs} legs.`;
+            }
+        }
+
+        // Event Listeners for Buttons
+        document.getElementById("factoryButton").addEventListener("click", () => {
+            let animal1 = createAnimal(4, true);
+            displayOutput(`Factory Function:\n${animal1.eat()}\n${animal1.greet()}`);
+        });
+
+        document.getElementById("constructorButton").addEventListener("click", () => {
+            let animalCF = new AnimalCF(4, true);
+            displayOutput(`Constructor Function:\n${animalCF.eat()}\n${animalCF.greet()}`);
+        });
+
+        document.getElementById("classButton").addEventListener("click", () => {
+            let animalES6 = new AnimalES6(4, true);
+            displayOutput(`ES6 Class:\n${animalES6.eat()}\n${animalES6.greet()}`);
+        });
+
+        // Function to Display Output in the Output Div
+        function displayOutput(text) {
+            const outputDiv = document.getElementById("output");
+            outputDiv.textContent = text;
+        }
+    </script>
+</body>
+</html>
